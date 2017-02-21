@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}\\API\\bin\\Debug\\netcoreapp1.0\\DotnetCoreTrademeStats.dll",
+            "program": "${workspaceRoot}/bin/Debug/netcoreapp1.0/DotnetCoreTrademeStats.dll",
             "args": [],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": false,

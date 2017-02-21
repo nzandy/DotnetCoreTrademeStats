@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}\\API\\DotnetCoreTrademeStats.csproj"
+                "${workspaceRoot}/DotnetCoreTrademeStats.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
