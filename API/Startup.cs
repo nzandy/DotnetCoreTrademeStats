@@ -1,20 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using DotnetCoreTrademeStats.ClassLib.Models;
 
-namespace DotnetCoreTrademeStats
-{
-	public class Startup
-	{
-		public Startup(IHostingEnvironment env)
-		{
+namespace DotnetCoreTrademeStats.API {
+	public class Startup {
+		public Startup(IHostingEnvironment env) {
 			var builder = new ConfigurationBuilder()
 				.SetBasePath(env.ContentRootPath)
 				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -27,12 +21,12 @@ namespace DotnetCoreTrademeStats
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services) {
+			services.AddLogging();
+			var connectionString = Configuration["DbContextSettings:ConnectionString"];
+			services.AddDbContext<TrademeStatsContext>(
+				opts => opts.UseNpgsql(connectionString));	
 			// Add framework services.
 			services.AddMvc();
-
-			var connectionString = Configuration["DbContextSettings:ConnectionString"];
-			services.AddDbContext<ArticleContext>(
-				opts => opts.UseNpgsql(connectionString));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

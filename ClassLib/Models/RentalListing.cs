@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
-using DotnetCoreTrademeStats.Attributes;
+using DotnetCoreTrademeStats.ClassLib.Attributes;
 
-namespace DotnetCoreTrademeStats.Models {
+namespace DotnetCoreTrademeStats.ClassLib.Models {
 
 	public class Agency {
 		public int Id { get; set; }
@@ -26,8 +26,7 @@ namespace DotnetCoreTrademeStats.Models {
 		// Property Details
 		public int RentPerWeek { get; set; }
 		public int Bedrooms { get; set; }
-		public int Bathrooms { get; set; }
-		
+		public int Bathrooms { get; set; }		
 		public Agency Agency { get; set; }
 
 		private string _startDate;

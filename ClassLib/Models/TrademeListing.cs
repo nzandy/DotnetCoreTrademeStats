@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DotnetCoreTrademeStats.Models{
+namespace DotnetCoreTrademeStats.ClassLib.Models {
 	public abstract class TrademeListing {
 		[Key]
 		public int ListingId { get; set; }

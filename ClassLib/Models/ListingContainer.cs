@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DotnetCoreTrademeStats.Models {
+namespace DotnetCoreTrademeStats.ClassLib.Models {
 	public class ListingContainer<T> where T : TrademeListing {
 		public int TotalCount { get; set; }
 		public int Page { get; set; }
