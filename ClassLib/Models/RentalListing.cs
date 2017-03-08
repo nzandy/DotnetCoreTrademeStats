@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.ComponentModel.DataAnnotations;
 using DotnetCoreTrademeStats.ClassLib.Attributes;
 
 namespace DotnetCoreTrademeStats.ClassLib.Models {
