@@ -1,7 +1,9 @@
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
@@ -12,23 +14,50 @@ using DotnetCoreTrademeStats.ClassLib.Models;
 
 namespace DotnetCoreTrademeStats.ListingScanner.ConsoleApp {
 	public class Program {
-		private static IConfigurationRoot _configuration;
-		private static ILoggerFactory _loggerFactory;
-		private static ILogger _logger;
 		public static void Main(string[] args) {
-			var services = new ServiceCollection();
+			var serviceCollection = new ServiceCollection();
+			ConfigureServices(serviceCollection);
+			IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+			ListingScanner listingScanner = serviceProvider.GetService<ListingScanner>();
+			Task.Run(() => listingScanner.Run()).Wait();
+		}
+
+		private static void ConfigureServices(IServiceCollection services){
+			ILoggerFactory loggerFactory = new LoggerFactory()
+			.AddConsole()
+			.AddDebug();
+
+			services.AddSingleton(loggerFactory);
 			services.AddLogging();
-			var connectionString = _configuration["DbContextSettings:ConnectionString"];
+
+			IConfigurationRoot configuration = GetConfiguration();
+			services.AddSingleton(configuration);
+			services.AddTransient<ListingScanner>();
+
+			var connectionString = configuration["DbContextSettings:ConnectionString"];
 			services.AddDbContext<TrademeStatsContext>(
 				opts => opts.UseNpgsql(connectionString));
+		}
 
-			var serviceProvider = services.BuildServiceProvider();
+		private static IConfigurationRoot GetConfiguration(){
+			return new ConfigurationBuilder()
+			.SetBasePath(Directory.GetCurrentDirectory())
+			.AddJsonFile("appsettings.json", optional: false)
+			.Build();
+		}
+	}
 
-			_logger = _loggerFactory.CreateLogger<Program>();
+	public class ListingScanner{
+		ILogger _logger;
+		TrademeStatsContext _context;
+		public ListingScanner(ILogger logger, TrademeStatsContext context){
+			_logger = logger;
+			_context = context;
+		}
 
+		public async Task Run(){
 			var rentalConnector = new TrademeRentalConnector("v1/Search/Property/Rental.json?", _logger);
-			TrademeStatsContext context = serviceProvider.GetService<TrademeStatsContext>();
-			TrademeStatsRepository respository = new TrademeStatsRepository(context);
+			TrademeStatsRepository respository = new TrademeStatsRepository(_context);
 
 			while (true) {
 
@@ -45,17 +74,6 @@ namespace DotnetCoreTrademeStats.ListingScanner.ConsoleApp {
 				_logger.LogDebug($"Finished fetching listings, took {sw.Elapsed.TotalSeconds} seconds. Press enter to exit.");
 				Thread.Sleep(600000);
 			}
-		}
-
-		private static void Configure(){
-			var builder = new ConfigurationBuilder()
-			.SetBasePath(Directory.GetCurrentDirectory())
-			.AddJsonFile("appsettings.json");
-
-			_configuration = builder.Build();
-			_loggerFactory = new LoggerFactory()
-			.AddConsole()
-			.AddDebug();
 		}
 	}
 }
