@@ -4,6 +4,10 @@ var apiUrl = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_PROD_
 
 function GetRentalListings(){
 	console.log('get rentals');
+	return axios.get(apiUrl + '/rentallistings')
+		.then(function(listings){
+			return listings.data;
+		});
 }
 
 function GetForSaleListings(){
