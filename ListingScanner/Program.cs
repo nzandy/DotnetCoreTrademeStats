@@ -50,8 +50,8 @@ namespace DotnetCoreTrademeStats.ListingScanner.ConsoleApp {
 	public class ListingScanner{
 		ILogger _logger;
 		TrademeStatsContext _context;
-		public ListingScanner(ILogger logger, TrademeStatsContext context){
-			_logger = logger;
+		public ListingScanner(ILoggerFactory loggerFactory, TrademeStatsContext context){
+			_logger = loggerFactory.CreateLogger<ListingScanner>();
 			_context = context;
 		}
 
@@ -71,7 +71,7 @@ namespace DotnetCoreTrademeStats.ListingScanner.ConsoleApp {
 
 				respository.SaveChanges();
 				sw.Stop();
-				_logger.LogDebug($"Finished fetching listings, took {sw.Elapsed.TotalSeconds} seconds. Press enter to exit.");
+				_logger.LogInformation($"Finished fetching listings, took {sw.Elapsed.TotalSeconds} seconds. Press enter to exit.");
 				Thread.Sleep(600000);
 			}
 		}
