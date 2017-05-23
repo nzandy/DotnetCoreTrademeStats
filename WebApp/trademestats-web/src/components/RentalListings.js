@@ -39,6 +39,7 @@ class ListingGrid extends React.Component{
 	render(){
 		return(
 			<div className='listings-container'>
+				<p> Found {this.props.listings.length} Listings. </p>
 				{this.props.listings.map(function(listing, index){
 					return (
 						<div key={listing.listingId} className='listing'>

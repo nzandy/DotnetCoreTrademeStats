@@ -1,7 +1,7 @@
 var React = require('react');
 var Home = require('./Home');
-require('../App.css');
 var RentalListings = require('./RentalListings');
+var Nav = require('./Nav');
 var ReactRouter = require('react-router-dom');
 var Router = ReactRouter.BrowserRouter;
 var Route = ReactRouter.Route;
@@ -13,8 +13,9 @@ class App extends React.Component {
 		return (
 			<Router>
 			<div className="container">
-				<div className="App-header">
+				<div className="app-header">
 					<h2>House Rentals NZ.</h2>
+					<Nav />
 				</div>
 				<Switch>
 					<Route exact path='/' component={Home} />
