@@ -21,7 +21,7 @@ namespace DotnetCoreTrademeStats.API.Controllers {
 		// GET: api/authors/5
 		[HttpGet("{id}")]
 		public RentalListing Get(int listingId){
-			return _dbContext.RentalListings.FirstOrDefault(l => l.ListingId == listingId);
+			return _dbContext.RentalListings.FirstOrDefault(l => l.Id == listingId);
 		}
 
 		[HttpPost]

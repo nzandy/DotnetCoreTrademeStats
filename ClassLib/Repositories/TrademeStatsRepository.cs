@@ -16,7 +16,7 @@ namespace DotnetCoreTrademeStats.ClassLib.Repositories {
 		}
 
 		public void AddRentalListing(RentalListing listing) {
-			if (!_context.RentalListings.Any(l => l.ListingId == listing.ListingId)) {
+			if (!_context.RentalListings.Any(l => l.Id == listing.Id)) {
 				// Only add if doesn't already exist.
 				_context.RentalListings.Add(listing);
 			}

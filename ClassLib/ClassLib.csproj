@@ -1,26 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard1.6</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration">
-      <Version>1.1.0</Version>
+      <Version>1.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json">
-      <Version>1.1.0</Version>
+      <Version>1.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions">
-      <Version>1.1.0</Version>
+      <Version>1.1.2</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>9.0.1</Version>
+      <Version>10.0.2</Version>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="1.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.0.0-msbuild3-final" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
-
-  	<ItemGroup>
-		<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0-msbuild3-final" /> 
-	</ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0-msbuild3-final" />
+  </ItemGroup>
 </Project>

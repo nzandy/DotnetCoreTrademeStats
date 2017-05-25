@@ -3,6 +3,6 @@
 namespace DotnetCoreTrademeStats.ClassLib.Models {
 	public abstract class TrademeListing {
 		[Key]
-		public int ListingId { get; set; }
+		public virtual int Id { get; set; }
 	}
 }

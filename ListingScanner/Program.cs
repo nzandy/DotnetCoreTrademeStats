@@ -34,9 +34,8 @@ namespace DotnetCoreTrademeStats.ListingScanner.ConsoleApp {
 			services.AddSingleton(configuration);
 			services.AddTransient<ListingScanner>();
 
-			var connectionString = configuration["DbContextSettings:ConnectionString"];
 			services.AddDbContext<TrademeStatsContext>(
-				opts => opts.UseNpgsql(connectionString));
+				opts => opts.UseNpgsql(configuration["DbContextSettings:ConnectionString"]));
 		}
 
 		private static IConfigurationRoot GetConfiguration(){
@@ -56,7 +55,7 @@ namespace DotnetCoreTrademeStats.ListingScanner.ConsoleApp {
 		}
 
 		public async Task Run(){
-			var rentalConnector = new TrademeRentalConnector("v1/Search/Property/Rental.json?", _logger);
+			var rentalConnector = new TrademeRentalConnector(_logger);
 			TrademeStatsRepository respository = new TrademeStatsRepository(_context);
 
 			while (true) {
@@ -65,7 +64,7 @@ namespace DotnetCoreTrademeStats.ListingScanner.ConsoleApp {
 				Stopwatch sw = Stopwatch.StartNew();
 				sw.Start();
 				foreach (var rentalListing in rentalListings) {
-					_logger.LogDebug($"Adding listing ID: {rentalListing.ListingId}");
+					_logger.LogDebug($"Adding listing ID: {rentalListing.Id}");
 					respository.AddRentalListing(rentalListing);
 				}
 

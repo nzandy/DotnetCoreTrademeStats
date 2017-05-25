@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using DotnetCoreTrademeStats.ClassLib.Attributes;
+using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace DotnetCoreTrademeStats.ClassLib.Models {
 
 	public class Agency {
+		
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public bool IsRealEstateAgency { get; set; }
@@ -12,7 +18,10 @@ namespace DotnetCoreTrademeStats.ClassLib.Models {
 
 	[TrademeListing("v1/Search/Property/Rental.json?")]
 	public class RentalListing : TrademeListing{
-		
+
+		[JsonProperty("ListingId")]
+		[Column("ListingId")]
+		public override int Id {get; set;}		
 		public string Title { get; set; }
 
 		public int RegionId { get; set; }

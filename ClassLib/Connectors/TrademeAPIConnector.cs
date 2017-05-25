@@ -6,26 +6,28 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using DotnetCoreTrademeStats.ClassLib.Models;
+using DotnetCoreTrademeStats.ClassLib.Attributes;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace DotnetCoreTrademeStats.ClassLib.Connectors {
-	public abstract class TrademeApiConnector<T> where T : TrademeListing {
+	public abstract class TrademeApiConnector<TEntity> where TEntity : TrademeListing {
 
 		const string ConsumerKey = "10E46E6F1019249C17FDF2DE6F6787EA";
 		const string ConsumerSecret = "7560BA2CAB4AF54FF2300F5D4C327E74";
 		const string SignatureMethod = "PLAINTEXT";
-		const int PageSize = 500;
 
 		protected JsonSerializerSettings Settings;
 
 		public HttpClient Client { get; set; }
 		public JsonSerializerSettings JsonSettings { get; set; }
 		public string RelativeUri { get; set; }
-		public IEnumerable<T> Listings { get; set; }
-		private readonly ILogger _logger;
+		public IEnumerable<TEntity> Listings { get; set; }
+		protected readonly ILogger _logger;
 
-		protected TrademeApiConnector(string relativeUri, ILogger logger) {
-			RelativeUri = relativeUri;
+		protected TrademeApiConnector(ILogger logger) {
+			
+			RelativeUri = GetApiUri();
 			_logger = logger;
 			Client = new HttpClient();
 			Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", GetAuthorizationHeader());
@@ -40,37 +42,15 @@ namespace DotnetCoreTrademeStats.ClassLib.Connectors {
 			};
 		}
 
-		public IEnumerable<T> GetListings() {
-			var listings = new List<T>();
-
-			int numResults;
-			int pageNum = 1;
-
-			_logger.LogInformation($"Attempting to fetch {typeof(T).Name} listings from {Client.BaseAddress}");
-			_logger.LogInformation($"Page size is {PageSize}");
-
-			do {
-				string requestUri = GetRequestUri(pageNum);
-
-				HttpResponseMessage response = Client.GetAsync(requestUri).Result;
-				string json = response.Content.ReadAsStringAsync().Result;
-
-				var listingResponse = JsonConvert.DeserializeObject<ListingContainer<T>>(json, Settings);
-
-				numResults = listingResponse.TotalCount;
-				listings.AddRange(listingResponse.List);
-
-				pageNum++;
-			} while (PageSize * (pageNum - 1) < numResults);
-			_logger.LogInformation($"Total count of listings: {numResults}");
-			_logger.LogInformation($"Successfuly parsed {listings.Count} rental listings.");
-			return listings;
+		private string GetApiUri(){
+			var attr = typeof(TEntity).GetTypeInfo().GetCustomAttribute<TrademeListingAttribute>();
+			if (attr == null){
+				throw new Exception("The specified type does not have a TrademeListingAttribute");
+			}
+			return attr.ApiPath;
 		}
 
-		private string GetRequestUri(int pageNum) {
-			_logger.LogInformation($"Fetching page number {pageNum} of results");
-			return string.Format($"{RelativeUri}rows={PageSize}&page={pageNum}");
-		}
+		public abstract IEnumerable<TEntity> GetListings(); 
 
 		public static string GetAuthorizationHeader() {
 			StringBuilder str = new StringBuilder();

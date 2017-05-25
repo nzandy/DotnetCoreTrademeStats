@@ -1,14 +1,26 @@
 {
 	"version": "0.2.0",
 	"configurations": [
+
 		{
-			"name": ".NET Core Launch (console)",
+			"name": "Rental Listing Scanner.",
 			"type": "coreclr",
 			"request": "launch",
 			"preLaunchTask": "build",
-			"program": "${workspaceRoot}/ListingScanner/bin/Debug/netcoreapp1.0/ListingScanner.dll",
+			"program": "${workspaceRoot}/ListingScanner/bin/Debug/netcoreapp1.1/ListingScanner.dll",
 			"args": [],
 			"cwd": "${workspaceRoot}/ListingScanner",
+			"stopAtEntry": false,
+			"externalConsole": false
+		},
+		{
+			"name": "Locality Fetcher",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "build",
+			"program": "${workspaceRoot}/Utilities/FetchTrademeLocalities/bin/Debug/netcoreapp1.1/FetchTrademeLocalities.dll",
+			"args": [],
+			"cwd": "${workspaceRoot}/Utilities/FetchTrademeLocalities",
 			"stopAtEntry": false,
 			"externalConsole": false
 		},
