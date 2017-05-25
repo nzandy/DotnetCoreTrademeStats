@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using DotnetCoreTrademeStats.ClassLib.Connectors;
 using DotnetCoreTrademeStats.ClassLib.Models;
+using DotnetCoreTrademeStats.ClassLib.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
@@ -55,7 +56,18 @@ namespace DotnetCoreTrademeStats.Utilities.FetchTrademeLocalities {
 		}
 		public async Task Run(){
 			TrademeLocalityConnector connector = new TrademeLocalityConnector(_logger);
-			var listings = connector.GetListings();
+			var localities = connector.GetListings();
+			TrademeStatsRepository respository = new TrademeStatsRepository(_context);
+			foreach (Locality locality in localities){
+				respository.AddLocality(locality);
+				foreach (District district in locality.Districts){
+					respository.AddDistrict(district);
+					foreach (Suburb suburb in district.Suburbs){
+						respository.AddSuburb(suburb);
+					}
+				}
+			}
+			respository.SaveChanges();
 		}
 	}
 

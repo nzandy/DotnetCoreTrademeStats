@@ -22,6 +22,27 @@ namespace DotnetCoreTrademeStats.ClassLib.Repositories {
 			}
 		}
 
+		public void AddLocality(Locality locality) {
+			if (!_context.Localities.Any(l => l.Id == locality.Id)) {
+				// Only add if doesn't already exist.
+				_context.Localities.Add(locality);
+			}
+		}
+
+		public void AddDistrict(District district) {
+			if (!_context.Localities.Any(d => d.Id == district.Id)) {
+				// Only add if doesn't already exist.
+				_context.Districts.Add(district);
+			}
+		}
+
+		public void AddSuburb(Suburb suburb) {
+			if (!_context.Suburbs.Any(s => s.Id == suburb.Id)) {
+				// Only add if doesn't already exist.
+				_context.Suburbs.Add(suburb);
+			}
+		}
+
 		public void SaveChanges() {
 			_context.SaveChanges();
 		}

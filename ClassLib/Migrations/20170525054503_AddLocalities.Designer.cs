@@ -8,9 +8,10 @@ using DotnetCoreTrademeStats.ClassLib.Models;
 namespace ClassLib.Migrations
 {
     [DbContext(typeof(TrademeStatsContext))]
-    partial class TrademeStatsContextModelSnapshot : ModelSnapshot
+    [Migration("20170525054503_AddLocalities")]
+    partial class AddLocalities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)

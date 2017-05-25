@@ -21,6 +21,7 @@ namespace DotnetCoreTrademeStats.ClassLib.Models {
 
 		[JsonProperty("ListingId")]
 		[Column("ListingId")]
+		[DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
 		public override int Id {get; set;}		
 		public string Title { get; set; }
 
