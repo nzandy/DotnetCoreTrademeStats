@@ -1,6 +1,7 @@
 var React = require('react');
 var Api = require('../utils/apiWrapper');
 var PropTypes = require('prop-types');
+var DropdownMenu = require('./DropdownMenu');
 
 class RentalListings extends React.Component{
 	constructor(props){
@@ -26,6 +27,7 @@ class RentalListings extends React.Component{
 	render(){
 		return(
 			<div className='rental-listings'>
+				<DropdownMenu />
 				{!this.state.listings
 					? <p>Loading</p>
 					: <ListingGrid listings={this.state.listings}/>

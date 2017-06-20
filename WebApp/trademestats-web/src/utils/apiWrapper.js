@@ -10,11 +10,20 @@ function GetRentalListings(){
 		});
 }
 
+function GetLocalities(){
+	console.log('get rentals');
+	return axios.get(apiUrl + '/localities')
+		.then(function(localities){
+			return localities.data;
+		});
+}
+
 function GetForSaleListings(){
 	console.log('get for sale');
 }
 
 module.exports = {
 	getRentalListings: GetRentalListings,
-	getForSaleListings: GetForSaleListings
+	getForSaleListings: GetForSaleListings,
+	getLocalities: GetLocalities
 }
