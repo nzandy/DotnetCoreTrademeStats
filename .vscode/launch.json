@@ -1,7 +1,36 @@
 {
 	"version": "0.2.0",
 	"configurations": [
-
+{
+	"name": "API",
+	"type": "coreclr",
+	"request": "launch",
+	"preLaunchTask": "build",
+	"program": "${workspaceRoot}/API/bin/Debug/netcoreapp1.1/DotnetCoreTrademeStats.dll",
+	"args": [],
+	"cwd": "${workspaceRoot}/API",
+	"stopAtEntry": false,
+	"launchBrowser": {
+		"enabled": true,
+		"args": "${auto-detect-url}",
+		"windows": {
+			"command": "cmd.exe",
+			"args": "/C start ${auto-detect-url}"
+		},
+		"osx": {
+			"command": "open"
+		},
+		"linux": {
+			"command": "xdg-open"
+		}
+	},
+	"env": {
+		"ASPNETCORE_ENVIRONMENT": "Development"
+	},
+	"sourceFileMap": {
+		"/Views": "${workspaceRoot}/Views"
+	}
+},
 		{
 			"name": "Rental Listing Scanner.",
 			"type": "coreclr",
@@ -23,36 +52,6 @@
 			"cwd": "${workspaceRoot}/Utilities/FetchTrademeLocalities",
 			"stopAtEntry": false,
 			"externalConsole": false
-		},
-		{
-			"name": ".NET Core Launch (web)",
-			"type": "coreclr",
-			"request": "launch",
-			"preLaunchTask": "build",
-			"program": "${workspaceRoot}/bin/Debug/<target-framework>/<project-name.dll>",
-			"args": [],
-			"cwd": "${workspaceRoot}",
-			"stopAtEntry": false,
-			"launchBrowser": {
-				"enabled": true,
-				"args": "${auto-detect-url}",
-				"windows": {
-					"command": "cmd.exe",
-					"args": "/C start ${auto-detect-url}"
-				},
-				"osx": {
-					"command": "open"
-				},
-				"linux": {
-					"command": "xdg-open"
-				}
-			},
-			"env": {
-				"ASPNETCORE_ENVIRONMENT": "Development"
-			},
-			"sourceFileMap": {
-				"/Views": "${workspaceRoot}/Views"
-			}
 		},
 		{
 			"name": ".NET Core Attach",
