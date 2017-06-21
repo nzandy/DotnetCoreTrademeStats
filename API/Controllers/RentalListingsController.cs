@@ -2,32 +2,42 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using DotnetCoreTrademeStats.ClassLib.Models;
+using DotnetCoreTrademeStats.ClassLib.Repositories;
 
 namespace DotnetCoreTrademeStats.API.Controllers {
 
 	[Route("api/[controller]")]
 	public class RentalListingsController : Controller {
-		private readonly TrademeStatsContext _dbContext;
+		private readonly IRentalListingRepository _repository;
 
-		public RentalListingsController(TrademeStatsContext dbContext) {
-			_dbContext = dbContext;
+		public RentalListingsController(TrademeStatsContext dbContext, IRentalListingRepository repository) {
+			_repository = repository;
 		}
 
 		// GET: api/rentallistings
 		public IEnumerable<RentalListing> Get(){
-			return _dbContext.RentalListings.ToList();
+			return _repository.GetRentalListings();
 		}
 
-		// GET: api/authors/5
+		[HttpGet("/api/rentallistings/locality/{localityId}")]
+		public IEnumerable<RentalListing> GetByLocality(int localityId){
+			List<RentalListing> listings = _repository.GetRentalListings().ToList();
+
+			// Fetch districts in given locality (as we do not have a direct link from RentalListing)
+			IEnumerable<int> districtsInLocality = _repository.GetDistrictsInLocality(localityId).Select(d => d.Id);
+			return listings.Where(l => districtsInLocality.Contains(l.DistrictId));
+		}
+
+		// GET: api/rentallistings/5
 		[HttpGet("{id}")]
 		public RentalListing Get(int listingId){
-			return _dbContext.RentalListings.FirstOrDefault(l => l.Id == listingId);
+			return _repository.GetRentalListings().FirstOrDefault(l => l.Id == listingId);
 		}
 
 		[HttpPost]
 		public IActionResult Post([FromBody]RentalListing value){
-			_dbContext.RentalListings.Add(value);
-			_dbContext.SaveChanges();
+			_repository.AddRentalListing(value);
+			_repository.SaveChanges();
 			return StatusCode(201, value);
 		}
 	}

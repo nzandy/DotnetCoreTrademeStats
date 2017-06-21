@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using DotnetCoreTrademeStats.ClassLib.Models;
+using DotnetCoreTrademeStats.ClassLib.Repositories;
 
 namespace DotnetCoreTrademeStats.API {
 	public class Startup {
@@ -33,6 +34,8 @@ namespace DotnetCoreTrademeStats.API {
 					.AllowAnyMethod()
 					.AllowAnyHeader();
 			}));
+
+			services.AddTransient<IRentalListingRepository, TrademeStatsRepository>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

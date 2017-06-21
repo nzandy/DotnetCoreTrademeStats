@@ -10,12 +10,13 @@ class RentalListings extends React.Component{
 		this.state = {
 			listings: null
 		}
+
+		this.handleDropdownChange = this.handleDropdownChange.bind(this);
 	}
 
 	componentDidMount(){
 		Api.getRentalListings()
 			.then(function(listings){
-				console.log(JSON.stringify(listings));
 				this.setState(function(){
 					return {
 						listings: listings
@@ -24,10 +25,18 @@ class RentalListings extends React.Component{
 		}.bind(this));
 	}
 
+	handleDropdownChange(rentalListings){
+		this.setState(function(){
+			return {
+				listings: rentalListings
+			}
+		});
+	}
+
 	render(){
 		return(
 			<div className='rental-listings'>
-				<DropdownMenu />
+				<DropdownMenu onChange={this.handleDropdownChange}/>
 				{!this.state.listings
 					? <p>Loading</p>
 					: <ListingGrid listings={this.state.listings}/>

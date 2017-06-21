@@ -1,5 +1,6 @@
 var React = require('react');
 var Api = require('../utils/apiWrapper');
+var PropTypes = require('prop-types');
 
 class DropdownMenu extends React.Component {
 	constructor(props){
@@ -25,8 +26,12 @@ class DropdownMenu extends React.Component {
 	}
 
 	handleChange(event) {
-		console.log(event.target.value);
-		this.setState({value: event.target.value});
+		var localityId = event.target.value;
+		this.setState({value: localityId});
+		Api.getRentalListingsForLocality(localityId)
+			.then(function(filteredListings){
+				this.props.onChange(filteredListings);
+			}.bind(this));
 	}
 
 	render(){
@@ -44,6 +49,10 @@ class DropdownMenu extends React.Component {
 		)
 	}
 
+}
+
+DropdownMenu.propTypes = {
+	onChange: PropTypes.func.isRequired
 }
 
 module.exports = DropdownMenu;

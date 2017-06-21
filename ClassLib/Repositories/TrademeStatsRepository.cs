@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using DotnetCoreTrademeStats.ClassLib.Models;
 
 
@@ -13,6 +15,14 @@ namespace DotnetCoreTrademeStats.ClassLib.Repositories {
 
 		public IQueryable<RentalListing> GetRentalListings() {
 			return _context.RentalListings;
+		}
+
+		public IEnumerable<District> GetDistrictsInLocality(int localityId){
+			Locality locality = _context.Localities.Include(l => l.Districts).FirstOrDefault(l => l.Id == localityId);
+			if (locality != null){
+				return locality.Districts;
+			}
+			return new List<District>();
 		}
 
 		public void AddRentalListing(RentalListing listing) {
