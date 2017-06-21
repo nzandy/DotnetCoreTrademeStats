@@ -29,6 +29,7 @@ namespace DotnetCoreTrademeStats.ClassLib.Models {
 		public string Region { get; set; }
 		public int SuburbId { get; set; }
 		public string Suburb { get; set; }
+		public int DistrictId { get; set; }
 		public string District { get; set; }
 
 		// Property Details
