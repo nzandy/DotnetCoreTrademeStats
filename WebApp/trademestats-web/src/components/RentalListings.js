@@ -44,7 +44,7 @@ class ListingGrid extends React.Component{
 				<p> Found {this.props.listings.length} Listings. </p>
 				{this.props.listings.map(function(listing, index){
 					return (
-						<div key={listing.listingId} className='listing'>
+						<div key={listing.ListingId} className='listing'>
 							<p>{listing.title}</p>
 							<p>Price: ${listing.rentPerWeek}pw </p>
 						</div>
