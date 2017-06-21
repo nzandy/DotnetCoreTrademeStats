@@ -6,8 +6,11 @@ class DropdownMenu extends React.Component {
 		super(props);
 
 		this.state = {
-			localities: []
+			localities: [],
+			value: ''
 		};
+
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	componentDidMount(){
@@ -21,14 +24,19 @@ class DropdownMenu extends React.Component {
 		}.bind(this));
 	}
 
+	handleChange(event) {
+		console.log(event.target.value);
+		this.setState({value: event.target.value});
+	}
+
 	render(){
 		return (
 			<div>
 				<p> Filter by Region: </p>
-				<select>
+				<select value={this.state.value} onChange={this.handleChange}>
 					{this.state.localities.map(function(locality, index){
 						return (
-							<option value={locality.name} key={locality.LocalityId}>{locality.name} </option>
+							<option value={locality.LocalityId} key={locality.LocalityId}>{locality.name} </option>
 						)
 					})}
 				</select>
