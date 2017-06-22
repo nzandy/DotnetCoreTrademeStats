@@ -36,9 +36,9 @@ class DropdownMenu extends React.Component {
 
 	render(){
 		return (
-			<div>
-				<p> Filter by Region: </p>
-				<select value={this.state.value} onChange={this.handleChange}>
+			<div className='dropdown-menu'>
+				<label htmlFor='region-dropdown'> Filter by Region: </label>
+				<select name='region-dropdown' value={this.state.value} onChange={this.handleChange}>
 					{this.state.localities.map(function(locality, index){
 						return (
 							<option value={locality.LocalityId} key={locality.LocalityId}>{locality.name} </option>

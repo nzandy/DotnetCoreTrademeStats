@@ -22,6 +22,34 @@ body {
 	font-weight: bold;
 }
 
+.dropdown-menu {
+	padding-top: 10px;
+	text-align: center;
+}
+
+.rental-listing-container {
+	margin: 0 auto;
+	background: lightgray;
+}
+
+.rental-listing-container .results{
+	text-align: center;
+}
+.listings-container {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	background: gray;
+	justify-content: center;
+}
+
+.listings-container .listing{
+	margin: 10px;
+	padding: 5px;
+	width: 25%;
+	border: 1px solid black;
+}
+
 li {
 	list-style-type: none;
 }

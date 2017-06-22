@@ -35,12 +35,12 @@ class RentalListings extends React.Component{
 
 	render(){
 		return(
-			<div className='rental-listings'>
+			<div className='rental-listing-container'>
 				<DropdownMenu onChange={this.handleDropdownChange}/>
-				{!this.state.listings
-					? <p>Loading</p>
-					: <ListingGrid listings={this.state.listings}/>
-				}
+					{!this.state.listings
+						? <p>Loading</p>
+						: <ListingGrid listings={this.state.listings}/>
+					}
 			</div>
 		)
 	}
@@ -49,16 +49,18 @@ class RentalListings extends React.Component{
 class ListingGrid extends React.Component{
 	render(){
 		return(
-			<div className='listings-container'>
+			<div className='results'>
 				<p> Found {this.props.listings.length} Listings. </p>
-				{this.props.listings.map(function(listing, index){
-					return (
-						<div key={listing.ListingId} className='listing'>
-							<p>{listing.title}</p>
-							<p>Price: ${listing.rentPerWeek}pw </p>
-						</div>
-					)
-				})}
+				<div className='listings-container'>
+					{this.props.listings.map(function(listing, index){
+						return (
+							<div key={listing.ListingId} className='listing'>
+								<p>{listing.title}</p>
+								<p>Price: ${listing.rentPerWeek}pw </p>
+							</div>
+						)
+					})}
+				</div>
 			</div>
 		)	
 	}
