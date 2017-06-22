@@ -19,7 +19,8 @@ class DropdownMenu extends React.Component {
 			.then(function(localities){
 				this.setState(function(){
 					return {
-						localities: localities
+						localities: localities,
+						value: 100 // Make sure 'all' is selected by default.
 					}
 				})
 		}.bind(this));

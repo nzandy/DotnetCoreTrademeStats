@@ -23,6 +23,10 @@ namespace DotnetCoreTrademeStats.API.Controllers {
 		public IEnumerable<RentalListing> GetByLocality(int localityId){
 			List<RentalListing> listings = _repository.GetRentalListings().ToList();
 
+			if (localityId == 100){
+				return listings;
+			}
+
 			// Fetch districts in given locality (as we do not have a direct link from RentalListing)
 			IEnumerable<int> districtsInLocality = _repository.GetDistrictsInLocality(localityId).Select(d => d.Id);
 			return listings.Where(l => districtsInLocality.Contains(l.DistrictId));
