@@ -17,6 +17,20 @@ namespace DotnetCoreTrademeStats.ClassLib.Repositories {
 			return _context.RentalListings;
 		}
 
+		public IQueryable<RentalListing> GetRentalListingsInLocality(int localityId){
+
+			var listings = GetRentalListings();
+
+			// 100 = All.
+			if (localityId == 100){
+				return listings;
+			}
+
+			// Fetch districts in given locality (as we do not have a direct link from RentalListing)
+			IEnumerable<int> districtsInLocality = GetDistrictsInLocality(localityId).Select(d => d.Id);
+			return listings.Where(l => districtsInLocality.Contains(l.DistrictId));
+		}
+
 		public IEnumerable<District> GetDistrictsInLocality(int localityId){
 			Locality locality = _context.Localities.Include(l => l.Districts).FirstOrDefault(l => l.Id == localityId);
 			if (locality != null){
