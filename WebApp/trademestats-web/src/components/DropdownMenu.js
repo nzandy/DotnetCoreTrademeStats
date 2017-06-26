@@ -1,5 +1,4 @@
 var React = require('react');
-var Api = require('../utils/apiWrapper');
 var PropTypes = require('prop-types');
 
 class DropdownMenu extends React.Component {
@@ -7,7 +6,7 @@ class DropdownMenu extends React.Component {
 		super(props);
 
 		this.state = {
-			localities: [],
+			items: [],
 			value: ''
 		};
 
@@ -15,36 +14,38 @@ class DropdownMenu extends React.Component {
 	}
 
 	componentDidMount(){
-		Api.getLocalities()
-			.then(function(localities){
+		
+		this.props.loadItems()
+			.then(function(items){
 				this.setState(function(){
 					return {
-						localities: localities,
-						value: 100 // Make sure 'all' is selected by default.
+						items: items,
+						value: this.props.defaultValue // Make sure 'all' is selected by default.
 					}
 				})
 		}.bind(this));
 	}
 
 	handleChange(event) {
-		var localityId = event.target.value;
-		this.setState({value: localityId});
-		Api.getRentalListingsForLocality(localityId)
-			.then(function(filteredListings){
-				this.props.onChange(filteredListings);
-			}.bind(this));
+		var selectedId = event.target.value;
+		this.setState({value: selectedId});
+		this.props.onChange(selectedId);
 	}
 
 	render(){
 		return (
 			<div className='dropdown-menu'>
-				<label htmlFor='region-dropdown'> Filter by Region: </label>
-				<select name='region-dropdown' value={this.state.value} onChange={this.handleChange}>
-					{this.state.localities.map(function(locality, index){
+				<label htmlFor='dropdown-select'> {this.props.labelText} </label>
+				<select name='dropdown-select' value={this.state.value} onChange={this.handleChange}>
+					{this.state.items.map(function(item, index){
 						return (
-							<option value={locality.LocalityId} key={locality.LocalityId}>{locality.name} </option>
+							<option
+								value={this.props.getItemId(item)} 
+								key={this.props.getItemId(item)}>
+								{this.props.getItemName(item)} 
+							</option>
 						)
-					})}
+					}.bind(this))}
 				</select>
 			</div>
 		)
@@ -53,7 +54,12 @@ class DropdownMenu extends React.Component {
 }
 
 DropdownMenu.propTypes = {
-	onChange: PropTypes.func.isRequired
+	loadItems: PropTypes.func.isRequired,
+	onChange: PropTypes.func.isRequired,
+	getItemId: PropTypes.func.isRequired,
+	getItemName: PropTypes.func.isRequired,
+	labelText: PropTypes.string.isRequired,
+	defaultValue: PropTypes.number.isRequired
 }
 
 module.exports = DropdownMenu;

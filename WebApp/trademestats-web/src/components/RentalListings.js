@@ -25,18 +25,40 @@ class RentalListings extends React.Component{
 		}.bind(this));
 	}
 
-	handleDropdownChange(rentalListings){
-		this.setState(function(){
-			return {
-				listings: rentalListings
-			}
-		});
+	handleDropdownChange(localityId){
+		Api.getRentalListingsForLocality(localityId)
+			.then(function(filteredListings){
+				this.setState(function(){
+					return {
+						listings: filteredListings
+					}
+				});
+			}.bind(this));
+		
+	}
+
+	loadRentalListings(){
+		return Api.getLocalities();
+	}
+
+	getRentalListingId(listing){
+		return listing.LocalityId;
+	}
+
+	getRentalListingName(listing){
+		return listing.name;
 	}
 
 	render(){
 		return(
 			<div className='rental-listing-container'>
-				<DropdownMenu onChange={this.handleDropdownChange}/>
+				<DropdownMenu 
+					loadItems={this.loadRentalListings} 
+					onChange={this.handleDropdownChange} 
+					labelText='Filter by Region: '
+					defaultValue={100} 
+					getItemId={this.getRentalListingId}
+					getItemName={this.getRentalListingName}/>
 					{!this.state.listings
 						? <p>Loading</p>
 						: <ListingGrid listings={this.state.listings}/>

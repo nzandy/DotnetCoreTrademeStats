@@ -15,6 +15,11 @@ class Nav extends React.Component{
 						Rentals
 					</NavLink>
 				</li>
+				<li>
+					<NavLink activeClassName='active' to='/stats'>
+						Stats
+					</NavLink>
+				</li>
 			</ul>
 		)
 	}
