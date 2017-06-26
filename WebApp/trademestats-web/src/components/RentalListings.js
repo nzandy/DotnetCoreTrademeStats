@@ -1,7 +1,8 @@
 var React = require('react');
 var Api = require('../utils/apiWrapper');
 var PropTypes = require('prop-types');
-var DropdownMenu = require('./DropdownMenu');
+var LocalityDropdownMenu = require('./LocalityDropdownMenu');
+
 
 class RentalListings extends React.Component{
 	constructor(props){
@@ -34,31 +35,14 @@ class RentalListings extends React.Component{
 					}
 				});
 			}.bind(this));
-		
-	}
-
-	loadRentalListings(){
-		return Api.getLocalities();
-	}
-
-	getRentalListingId(listing){
-		return listing.LocalityId;
-	}
-
-	getRentalListingName(listing){
-		return listing.name;
 	}
 
 	render(){
 		return(
 			<div className='rental-listing-container'>
-				<DropdownMenu 
-					loadItems={this.loadRentalListings} 
+				<LocalityDropdownMenu 
 					onChange={this.handleDropdownChange} 
-					labelText='Filter by Region: '
-					defaultValue={100} 
-					getItemId={this.getRentalListingId}
-					getItemName={this.getRentalListingName}/>
+					/>
 					{!this.state.listings
 						? <p>Loading</p>
 						: <ListingGrid listings={this.state.listings}/>
