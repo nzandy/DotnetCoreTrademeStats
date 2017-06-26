@@ -4,26 +4,26 @@ var DropdownMenu = require('./DropdownMenu');
 var Api = require('../utils/apiWrapper');
 
 class LocalityDropdownMenu extends React.Component {
-	loadRentalListings(){
+	loadLocalities(){
 		return Api.getLocalities();
 	}
 
-	getRentalListingId(listing){
-		return listing.LocalityId;
+	getLocalityId(locality){
+		return locality.LocalityId;
 	}
 
-	getRentalListingName(listing){
-		return listing.name;
+	getLocalityName(locality){
+		return locality.name;
 	}
 
 	render(){
 		return ( <DropdownMenu 
-			loadItems={this.loadRentalListings} 
+			loadItems={this.loadLocalities} 
 			onChange={this.props.onChange} 
 			labelText='Filter by Region: '
 			defaultValue={100} 
-			getItemId={this.getRentalListingId}
-			getItemName={this.getRentalListingName}
+			getItemId={this.getLocalityId}
+			getItemName={this.getLocalityName}
 		/> )
 	}
 }

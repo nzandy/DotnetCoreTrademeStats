@@ -9,5 +9,6 @@ namespace DotnetCoreTrademeStats.ClassLib.Repositories {
 		void AddRentalListing(RentalListing listing);
 		void SaveChanges();
 		IEnumerable<District> GetDistrictsInLocality(int localityId);
+		LocalityRentalStatistic GetRentalStatsForLocality(int localityId);
 	}
 }

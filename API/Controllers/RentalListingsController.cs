@@ -10,7 +10,7 @@ namespace DotnetCoreTrademeStats.API.Controllers {
 	public class RentalListingsController : Controller {
 		private readonly IRentalListingRepository _repository;
 
-		public RentalListingsController(TrademeStatsContext dbContext, IRentalListingRepository repository) {
+		public RentalListingsController(IRentalListingRepository repository) {
 			_repository = repository;
 		}
 

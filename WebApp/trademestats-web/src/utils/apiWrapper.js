@@ -23,6 +23,13 @@ function GetRentalListingsForLocality(localityId){
 		});
 }
 
+function GetRentalListingStatsForLocality(localityId){
+	return axios.get(apiUrl + '/stats/locality/' + localityId)
+		.then(function(stats){
+			return stats.data;
+		});
+}
+
 function GetForSaleListings(){
 	console.log('get for sale');
 }
@@ -31,5 +38,6 @@ module.exports = {
 	getRentalListings: GetRentalListings,
 	getForSaleListings: GetForSaleListings,
 	getLocalities: GetLocalities,
-	getRentalListingsForLocality: GetRentalListingsForLocality
+	getRentalListingsForLocality: GetRentalListingsForLocality,
+	getRentalListingStatsForLocality: GetRentalListingStatsForLocality
 }

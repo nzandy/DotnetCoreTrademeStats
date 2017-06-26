@@ -67,6 +67,20 @@ namespace DotnetCoreTrademeStats.ClassLib.Repositories {
 			}
 		}
 
+		public LocalityRentalStatistic GetRentalStatsForLocality(int localityId){
+			List<RentalListing> listingsInLocality = GetRentalListingsInLocality(localityId).ToList();
+			LocalityRentalStatistic stats = new LocalityRentalStatistic();
+			if (listingsInLocality.Any()){
+				stats.ListingCount = listingsInLocality.Count;
+				stats.AverageRentPerWeek = listingsInLocality.Average(l => l.RentPerWeek);
+				stats.AverageRentPerRoom = listingsInLocality.Average(l => (l.RentPerWeek / l.Bedrooms));
+				stats.HighestRentPerWeek = listingsInLocality.Max(l => l.RentPerWeek);
+				stats.LowestRentPerWeek = listingsInLocality.Min(l => l.RentPerWeek);
+			}
+
+			return stats;
+		}
+
 		public void SaveChanges() {
 			_context.SaveChanges();
 		}
