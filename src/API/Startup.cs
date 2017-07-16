@@ -11,9 +11,16 @@ namespace DotnetCoreTrademeStats.API {
 	public class Startup {
 		private IConfigurationRoot _configuration;
 		private IHostingEnvironment _env;
-		public Startup(IHostingEnvironment env, IConfigurationRoot config) {
-			_configuration = config;
+		public Startup(IHostingEnvironment env) {
 			_env = env;
+
+			var builder = new ConfigurationBuilder()
+				.SetBasePath(env.ContentRootPath)
+				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+				.AddEnvironmentVariables();
+
+				_configuration = builder.Build();
 		}
 
 		// This method gets called by the runtime. Use this method to add services to the container.
