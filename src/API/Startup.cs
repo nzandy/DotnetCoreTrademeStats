@@ -11,9 +11,10 @@ namespace DotnetCoreTrademeStats.API {
 	public class Startup {
 		private IConfigurationRoot _configuration;
 		private IHostingEnvironment _env;
-		public Startup(IHostingEnvironment env) {
+		private ILogger<Startup> _logger;
+		public Startup(IHostingEnvironment env, ILogger<Startup> logger) {
 			_env = env;
-
+			_logger = logger;
 			var builder = new ConfigurationBuilder()
 				.SetBasePath(env.ContentRootPath)
 				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -28,6 +29,7 @@ namespace DotnetCoreTrademeStats.API {
 			services.AddLogging();
 
 			string connectionString = _configuration["dbConnStr"];
+			_logger.LogInformation("Connection string: {0}", connectionString);
 			
 			services.AddDbContext<TrademeStatsContext>(
 				opts => opts.UseNpgsql(connectionString));	

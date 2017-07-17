@@ -3,6 +3,7 @@ using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace DotnetCoreTrademeStats.API {
 	public class Program {
@@ -22,6 +23,10 @@ namespace DotnetCoreTrademeStats.API {
 				.UseKestrel()
 				.UseConfiguration(config)
 				.ConfigureServices(s => s.AddSingleton<IConfigurationRoot>(config))
+				.ConfigureLogging(f => {
+					f.AddConsole()
+					.AddDebug();
+				})
 				.UseContentRoot(Directory.GetCurrentDirectory())
 				.UseIISIntegration()
 				.UseStartup<Startup>()
