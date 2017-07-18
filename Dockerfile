@@ -14,7 +14,7 @@ ENV ASPNETCORE_URLS http://*:5000
 EXPOSE 5000/tcp
 
 # Build and run the dotnet application from within container
-ENTRYPOINT ["dotnet", "run", "--server.urls", "http://*:5000", "-e dbConnStr=$dbConnStr"]
+ENTRYPOINT ["dotnet", "run", "--server.urls", "http://*:5000"]
 
 
 
