@@ -16,7 +16,8 @@ namespace DotnetCoreTrademeStats.API.Controllers {
 
 		// GET: api/rentallistings
 		public IEnumerable<RentalListing> Get(){
-			return _repository.GetRentalListings();
+			//return _repository.GetRentalListings();
+			return new List<RentalListing>();
 		}
 
 		[HttpGet("/api/rentallistings/locality/{localityId}")]
