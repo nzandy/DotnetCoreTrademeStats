@@ -18,6 +18,7 @@ namespace DotnetCoreTrademeStats.API {
 			var config = new ConfigurationBuilder()
 				.AddCommandLine(args)
 				.Build();
+				
 
 			var host = new WebHostBuilder()	
 				.UseKestrel()
