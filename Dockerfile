@@ -6,6 +6,7 @@ WORKDIR /app
 COPY src/API /app/API
 COPY src/ClassLib /app/ClassLib
 
+WORKDIR /app/src
 RUN ["dotnet", "restore"]
 WORKDIR /app/API
 RUN ["dotnet", "build"]
