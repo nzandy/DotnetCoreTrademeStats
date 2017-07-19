@@ -21,8 +21,8 @@
 					"value": "${AWS_VIRTUAL_HOST}"
 				},
 				{
-					"name": "dbConnStr",
-					"value": "${dbConnStr}"
+					"name": "TMS_DB_CONN_STR",
+					"value": "${TMS_DB_CONN_STR}"
 				}
 			]
 		}

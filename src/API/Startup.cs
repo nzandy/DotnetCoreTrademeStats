@@ -28,7 +28,7 @@ namespace DotnetCoreTrademeStats.API {
 		public void ConfigureServices(IServiceCollection services) {
 			services.AddLogging();
 
-			string connectionString = _configuration["dbConnStr"];
+			string connectionString = _configuration["TMS_DB_CONN_STR"];
 			_logger.LogInformation("Connection string: {0}", connectionString);
 			
 			services.AddDbContext<TrademeStatsContext>(
