@@ -4,4 +4,4 @@ export IMAGE_VERSION=latest
 
 export AWS_DEFAULT_REGION=us-east-2
 export AWS_ECS_CLUSTER_NAME=default
-export AWS_VIRTUAL_HOST=rentalstats.co.nz
+export AWS_VIRTUAL_HOST=api.rentalstats.co.nz
